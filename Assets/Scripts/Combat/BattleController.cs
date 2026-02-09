@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleController : MonoBehaviour
 {
@@ -10,33 +11,34 @@ public class BattleController : MonoBehaviour
     [Header("Shooting settings")]
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _fireRate = 2f;
-    [SerializeField] Laser_Projectile _projectilePrefab;
-    [SerializeField] private int _poolSize = 50;
+    [SerializeField] private Laser_Projectile _projectilePrefab;
+    [SerializeField] private int _poolSize = 26;
     
+    [Header("UI & Skills")]
+    [SerializeField] private PlayerCanvas _playerCanvas;
+    [SerializeField] private Skill_1 _skill1Prefab;
+
     [Header("Audio")]
     [SerializeField] private AudioClip _shootSound;
     [SerializeField] private AudioSource _audioSource;
-    
-    [Header("Skills")]
-    [SerializeField] private Skill_1 _skill1Prefab;
-    
 
     private float _lastFireTime;
     private float _lastSkill1Time;
     private List<Laser_Projectile> _projectilePool;
+    private float _skill1CooldownDuration; //cached cooldown
 
     void Start()
     {
         _inputHandler = GetComponent<InputHandler>();
-        //_playerController = GetComponent<PlayerController>();
         _audioSource = GetComponent<AudioSource>();
-
         if (_inputHandler != null)
         {
             _inputHandler.OnSkill_1 += HandleSkill1Input;
         }
-
         CreatePool();
+
+        _skill1CooldownDuration = _skill1Prefab.CooldownTimeSkill_1Global;
+        _lastSkill1Time = -_skill1CooldownDuration; //so its ready at start
     }
 
     private void OnDestroy()
@@ -49,7 +51,8 @@ public class BattleController : MonoBehaviour
 
     void Update()
     {
-        if (_inputHandler.IsFiring && !PauseController.Instance.IsGamePaused)
+        bool isPaused = PauseController.Instance != null && PauseController.Instance.IsGamePaused;
+        if (_inputHandler.IsFiring && !isPaused)
         {
             HandleShootInput();
         }
@@ -111,14 +114,15 @@ public class BattleController : MonoBehaviour
     private void HandleSkill1Input()
     {
         //cooldown check
-        if (Time.time < _lastSkill1Time + _skill1Prefab.CooldownTimeSkil_1Global)
+        if (Time.time < _lastSkill1Time + _skill1CooldownDuration)
         {
             Debug.Log("Skill 1 on Cooldown");
             return;
         }
         
         ActivateSkill1();
-        _lastSkill1Time = Time.time;
+        _lastSkill1Time = Time.time; //refresh the timer
+        if(_playerCanvas != null) _playerCanvas.StartCooldown(_skill1CooldownDuration); //start UI cooldown
     }
     private void ActivateSkill1()
     {

@@ -140,3 +140,5 @@ MonoBehaviour:
   _expansionSpeed: 100
   _maxSize: 50
   _damage: 100
+  _coolDown: 5
+  Skill_1_CooldownUI: {fileID: 0}

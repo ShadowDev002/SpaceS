@@ -1,17 +1,17 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Skill_1 : MonoBehaviour
 {
-
     [Header("Skill Settings")]
     [SerializeField] private float _expansionSpeed = 5f;
     [SerializeField] private float _maxSize = 20f;
     [SerializeField] private int _damage = 50;
+    
     [SerializeField] public float _coolDown = 5f;
-    public float CooldownTimeSkil_1Global => _coolDown;
-
+    public float CooldownTimeSkill_1Global => _coolDown;
 
     //list for not to damage the same enemy multiple times
     private List<GameObject> _hitEnemies = new List<GameObject>();

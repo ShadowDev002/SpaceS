@@ -76,10 +76,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f799092b73f7f47be3d86e06947063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _rotationSpeed: 700
+  _speed: 3.5
+  _speedPlus: 6
+  _rotationSpeed: 450
   _inputHandler: {fileID: 9214817827270077260}
   _mainCam: {fileID: 0}
+  _cursorUITransform: {fileID: 0}
 --- !u!114 &3774293194828795665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,11 +96,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputHandler: {fileID: 9214817827270077260}
   _firePoint: {fileID: 2730334644868539300}
-  _fireRate: 0.3
+  _fireRate: 0.2
   _projectilePrefab: {fileID: 6872143959032355876, guid: ba9706b16efff504d998c44696d3bff7, type: 3}
   _poolSize: 50
   _shootSound: {fileID: 8300000, guid: a47550f4ae7b63c4eb9db8315922c704, type: 3}
   _audioSource: {fileID: 3397639227732301519}
+  _skill1Prefab: {fileID: 3725122844306010744, guid: e34c47359c3e3e24ea0e7ac4f24e212d, type: 3}
 --- !u!114 &9214817827270077260
 MonoBehaviour:
   m_ObjectHideFlags: 0

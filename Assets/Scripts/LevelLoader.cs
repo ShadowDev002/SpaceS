@@ -22,10 +22,12 @@ public class LevelLoader : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void LoadNextLevel(int sceneIndex)
     {
         StartCoroutine(LoadLevelRoutine(sceneIndex));
     }
+    
     private IEnumerator LoadLevelRoutine(int sceneIndex)
     {
         _transitionImage.fillClockwise = true;

@@ -43,7 +43,9 @@ public class PlayerController : SpaceShip
     private void HandleCursorInput()
     {
         if(_cursorUITransform == null) return;
+        float canvasDistance = 9f;
+        Vector3 worldCursorPos = _mainCam.ScreenToWorldPoint(new Vector3(_currentMouseScreenPos.x, _currentMouseScreenPos.y, canvasDistance));
 
-        _cursorUITransform.position = _currentMouseScreenPos;
+        _cursorUITransform.position = worldCursorPos;
     }
 }
